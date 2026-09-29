@@ -13,7 +13,7 @@ class Solution {
     }
     boolean solve(char[][] grid, int i, int j, int balance) {
         if (balance < 0)
-            return false;
+        return false;
         if (grid[i][j] == '(')
             balance++;
         else
