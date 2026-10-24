@@ -1,29 +1,49 @@
+// class Solution {
+//     public String convert(String s, int numRows) {
+//         if (numRows == 1 || numRows >= s.length()) {
+//             return s;
+//         }
+//         StringBuilder[] rows = new StringBuilder[numRows];
+//         for (int i = 0; i < numRows; i++) {
+//             rows[i] = new StringBuilder();
+//         }
+//         int row = 0;
+//         int direction = 1;
+//         for (int i = 0; i < s.length(); i++) {
+//             rows[row].append(s.charAt(i));
+//             if (row == 0) {
+//                 direction = 1;
+//             }
+//             if (row == numRows - 1) {
+//                 direction = -1;
+//             }
+//             row = row + direction;
+//         }
+//         StringBuilder answer = new StringBuilder();
+//         for (int i = 0; i < numRows; i++) {
+//             answer.append(rows[i]);
+//         }
+//         return answer.toString();
+//     }
+// }
 class Solution {
     public String convert(String s, int numRows) {
         if (numRows == 1 || numRows >= s.length()) {
             return s;
         }
-        StringBuilder[] rows = new StringBuilder[numRows];
-        for (int i = 0; i < numRows; i++) {
-            rows[i] = new StringBuilder();
-        }
-        int row = 0;
-        int direction = 1;
-        for (int i = 0; i < s.length(); i++) {
-            rows[row].append(s.charAt(i));
-            if (row == 0) {
-                direction = 1;
+        int n = s.length();
+        int cycle = 2 * (numRows - 1);
+        StringBuilder result = new StringBuilder();
+        for (int row = 0; row < numRows; row++) {
+            for (int i = row; i < n; i += cycle) {
+                result.append(s.charAt(i));
+                int diag = i + cycle - 2 * row;
+                if (row != 0 && row != numRows - 1 && diag < n) {
+                    result.append(s.charAt(diag));
+                }
             }
-            if (row == numRows - 1) {
-                direction = -1;
-            }
-            row = row + direction;
         }
-        StringBuilder answer = new StringBuilder();
-        for (int i = 0; i < numRows; i++) {
-            answer.append(rows[i]);
-        }
-        return answer.toString();
+        return result.toString();
     }
 }
 
