@@ -1,29 +1,54 @@
+// class Solution {
+//     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+//         int[] arr = new int[nums1.length + nums2.length];
+//         int k = 0;
+//         for (int i = 0; i < nums1.length; i++) {
+//             arr[k] = nums1[i];
+//             k++;
+//         }
+//         for (int i = 0; i < nums2.length; i++) {
+//             arr[k] = nums2[i];
+//             k++;
+//         }
+//         for (int i = 0; i < arr.length - 1; i++) {
+//             for (int j = i + 1; j < arr.length; j++) {
+//                 if (arr[i] > arr[j]) {
+//                     int temp = arr[i];
+//                     arr[i] = arr[j];
+//                     arr[j] = temp;
+//                 }
+//             }
+//         }
+//         int n = arr.length;
+//         if (n % 2 != 0) {
+//             return arr[n / 2];
+//         }
+//         return (arr[n / 2 - 1] + arr[n / 2]) / 2.0;
+//     }
+// }
 class Solution {
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
-        int[] arr = new int[nums1.length + nums2.length];
-        int k = 0;
-        for (int i = 0; i < nums1.length; i++) {
-            arr[k] = nums1[i];
-            k++;
-        }
-        for (int i = 0; i < nums2.length; i++) {
-            arr[k] = nums2[i];
-            k++;
-        }
-        for (int i = 0; i < arr.length - 1; i++) {
-            for (int j = i + 1; j < arr.length; j++) {
-                if (arr[i] > arr[j]) {
-                    int temp = arr[i];
-                    arr[i] = arr[j];
-                    arr[j] = temp;
-                }
+        int n1 = nums1.length;
+        int n2 = nums2.length;
+        int[] nums3 = new int[n1+n2];
+        int i = 0, j = 0, k = 0;
+        while(i < n1 && j < n2){
+            if(nums1[i] < nums2[j]){
+                nums3[k++] = nums1[i++];
+            }
+            else{
+                nums3[k++] = nums2[j++];
             }
         }
-        int n = arr.length;
-        if (n % 2 != 0) {
-            return arr[n / 2];
+        while(i < n1){
+            nums3[k++] = nums1[i++];
         }
-        return (arr[n / 2 - 1] + arr[n / 2]) / 2.0;
+        while(j < n2){
+            nums3[k++] = nums2[j++];
+        }
+        int n = n1+n2;
+        if(n % 2 != 0) return (double)nums3[n/2];
+        return ((double)nums3[n/2] + (double)nums3[(n-1)/2]) / 2.0;
     }
 }
 
